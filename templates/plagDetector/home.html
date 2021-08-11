@@ -134,20 +134,24 @@
    <div class="d-flex justify-content-center py-1" style="color: rgb(255, 255, 255); background-color: rgb(146, 96, 189);">
        Sameple Test of Plagarism over two text
      </div>
+
+      <!-- compare form staart -->
+      <form method="POST" action="/search">
+        {% csrf_token %}
     <div class="row">
       <div class="col-sm border pb-3">
-        <label for="textarea1">Example textarea</label>
-        <textarea class="form-control" id="testarea1" rows="5"></textarea>
+        <label for="textarea1">textarea 1</label>
+        <textarea class="form-control" id="testarea1" name="text1"  rows="5"></textarea>
       </div>
       <div class="col-sm border" >
-        <label for="testarea2">Example textarea</label>
-    <textarea class="form-control" id="testarea2" rows="5"></textarea>
+        <label for="testarea2">textarea 2</label>
+    <textarea class="form-control" id="testarea2" name="text2" rows="5"></textarea>
       </div>
     </div>
     <div class="d-flex justify-content-center py-1">
-      <button class="btn btn-success">Test</button>
+      <button type="submit" class="btn btn-success">Test</button>
     </div>
-    
+      </form>
  </div>
     
 
