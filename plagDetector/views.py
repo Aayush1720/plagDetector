@@ -17,7 +17,7 @@ def plag(text1,text2):
 
     final_list = []
     for z in sent_text1:
-        print(z)
+        #print(z)
         for y in sent_text2:
             if z==y:
                 final_list.append(z)
