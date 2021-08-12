@@ -1,0 +1,11 @@
+asgiref==3.4.1
+click==8.0.1
+colorama==0.4.4
+Django==3.2.6
+joblib==1.0.1
+nltk==3.6.2
+pygame==2.0.1
+pytz==2021.1
+regex==2021.8.3
+sqlparse==0.4.1
+tqdm==4.62.0
