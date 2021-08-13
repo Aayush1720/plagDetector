@@ -6,7 +6,7 @@ updateList = function () {
     children +=
       "<li>" +
       input.files.item(i).name +
-      '<span class="remove-list" onclick="return this.parentNode.remove()">X</span>' +
+      // '<span class="remove-list" onclick="return this.parentNode.remove()">X</span>' +
       "</li>";
   }
   output.innerHTML = children;

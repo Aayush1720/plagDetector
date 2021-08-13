@@ -163,17 +163,39 @@
 
 
 
+
+<hr>
+
 <!-- drag and drop file code starts -->
+    <!-- UPLOAD FILES CODE HERE  -->
 <div class="container">
+  <center><h3>Upload Files Here</h3></center>
   <div class="container p-3 d-flex justify-content-center border">
+
+    <form method="POST" enctype="multipart/form-data">
     <div class="custom-file">
-      <input type="file" class="custom-file-input" id="file" multiple onchange="javascript:updateList()">
+      <!-- <input type="file" class="custom-file-input" id="file" multiple onchange="javascript:updateList()">
       <label class="custom-file-label" for="file">
         <img width="30" src="https://image.flaticon.com/icons/svg/54/54565.svg" /> Upload Files</label>
+ -->
+          {% csrf_token %}
+          <input type="file" name="document" multiple class="custom-file-input" id="file" onchange="javascript:updateList()">
+          <label class="custom-file-label" for="file">
+          <img width="30" src="https://image.flaticon.com/icons/svg/54/54565.svg" /> Upload Files</label>
+ 
     </div>
-    <ul id="fileList" class="file-list"></ul>
+
+    <div>
+      <ul id="fileList" class="file-list"></ul>
+    </div>
+
+      <button type="submit" class="btn btn-dark">Upload Files</button>
+      </form>
+  
   </div>
 </div>
+
+ <!-- UPLOAD CODE ENDS -->
 <!-- drag and drop file code ends  -->
 
 
