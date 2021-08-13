@@ -2,7 +2,7 @@
 {% load static %}
 {% block content %}
 <link rel="stylesheet"  type="text/css" href="{% static './style.css' %}">
-
+<script src="{% static './customscripts.js'  %}"></script>
 
 
 
@@ -156,6 +156,25 @@
     
 
 
+ {% for item in navigation %}
+       <p>{{item}}</p>
+{% endfor %}
+
+
+
+
+<!-- drag and drop file code starts -->
+<div class="container">
+  <div class="container p-3 d-flex justify-content-center border">
+    <div class="custom-file">
+      <input type="file" class="custom-file-input" id="file" multiple onchange="javascript:updateList()">
+      <label class="custom-file-label" for="file">
+        <img width="30" src="https://image.flaticon.com/icons/svg/54/54565.svg" /> Upload Files</label>
+    </div>
+    <ul id="fileList" class="file-list"></ul>
+  </div>
+</div>
+<!-- drag and drop file code ends  -->
 
 
     
@@ -169,9 +188,7 @@
 
 
 
-{% for item in navigation %}
-       <p>{{item}}</p>
-{% endfor %}
+
 
 
 
