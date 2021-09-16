@@ -64,16 +64,16 @@
       <div class="modal-body">
         <div class="form-group">
           <label for="loginInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="loginInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          <input type="email" class="form-control" id="loginInputEmail1" aria-describedby="emailHelp2" placeholder="Enter email">
+          <small id="emailHelp2" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
+          <label for="loginInputPassword1">Password</label>
           <input type="password" class="form-control" id="loginInputPassword1" placeholder="Password">
         </div>
         <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="loginCheck1">
-          <label class="form-check-label" for="logineCheck1">Check me out</label>
+          <input type="checkbox" class="form-check-input" id="loginCheck1" name="logineCheck1">
+          <label class="form-check-label" for="loginCheck1">Check me out</label>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
@@ -104,16 +104,16 @@
           <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Password</label>
+          <label for="signupInputPassword1">Password</label>
           <input type="password" class="form-control" id="signupInputPassword1" placeholder="Password">
         </div>
         <div class="form-group">
-          <label for="exampleInputPassword1">Confirm Password</label>
+          <label for="signupInputPassword2">Confirm Password</label>
           <input type="password" class="form-control" id="signupInputPassword2" placeholder="Confirm Password">
         </div>
         <div class="form-check">
           <input type="checkbox" class="form-check-input" id="signupCheck1">
-          <label class="form-check-label" for="signupeCheck1">Check me out</label>
+          <label class="form-check-label" for="signupCheck1">Check me out</label>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
@@ -141,7 +141,7 @@
     <div class="row">
       <div class="col-sm border pb-3">
         <label for="textarea1">textarea 1</label>
-        <textarea class="form-control" id="testarea1" name="text1"  rows="5"></textarea>
+        <textarea class="form-control" id="textarea1" name="text1"  rows="5"></textarea>
       </div>
       <div class="col-sm border" >
         <label for="testarea2">textarea 2</label>
@@ -188,7 +188,9 @@
     <div>
       <ul id="fileList" class="file-list"></ul>
     </div>
-
+      {% if error %}
+      <h6> {{error}} </h6>
+      {% endif %}
       <button type="submit" class="btn btn-dark">Upload Files</button>
       </form>
   
