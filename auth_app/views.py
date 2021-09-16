@@ -11,10 +11,8 @@ def logout_user(request):
     if request.user.is_authenticated:
         logout(request)
         return home(request)
-@csrf_exempt
 def login_user(request):
     if request.user.is_authenticated:
-        print("bhsod")
         logout(request)
         return home(request)
     
