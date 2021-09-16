@@ -36,6 +36,18 @@
         <a class="nav-link disabled" href="#">Disabled</a>
       </li>
     </ul>
+    {% if is_authenticated %}
+      <h4>Welcome {{username}}</h4>
+
+
+      <form class="form-inline my-2 my-lg-0">
+        
+         <a href=" {% url 'logout' %} " >
+              Logout
+      </a>
+      </form> 
+
+    {% else %}
     <form class="form-inline my-2 my-lg-0">
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signinmodal">
         Login
@@ -47,6 +59,7 @@
         SignUp
       </button>
     </form>
+    {% endif %}
   </div>
 </nav>
  <!-- end navbar -->
@@ -61,19 +74,18 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <form method = "POST" class="modal-body" action = "{% url 'login' %}" >
+        {% csrf_token %}
         <div class="form-group">
           <label for="loginInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="loginInputEmail1" aria-describedby="emailHelp2" placeholder="Enter email">
+          <input name="email" type="email" class="form-control" id="loginInputEmail1" aria-describedby="emailHelp2" placeholder="Enter email">
           <small id="emailHelp2" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
           <label for="loginInputPassword1">Password</label>
-          <input type="password" class="form-control" id="loginInputPassword1" placeholder="Password">
+          <input name="password" type="password" class="form-control" id="loginInputPassword1" placeholder="Password">
         </div>
         <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="loginCheck1" name="logineCheck1">
-          <label class="form-check-label" for="loginCheck1">Check me out</label>
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
@@ -100,16 +112,16 @@
       <div class="modal-body">
         <div class="form-group">
           <label for="signupInputEmail1">Email address</label>
-          <input type="email" class="form-control" id="signupInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+          <input name="email" type="email" class="form-control" id="signupInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
           <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
           <label for="signupInputPassword1">Password</label>
-          <input type="password" class="form-control" id="signupInputPassword1" placeholder="Password">
+          <input name="password" type="password" class="form-control" id="signupInputPassword1" placeholder="Password">
         </div>
         <div class="form-group">
           <label for="signupInputPassword2">Confirm Password</label>
-          <input type="password" class="form-control" id="signupInputPassword2" placeholder="Confirm Password">
+          <input name="password2" type="password" class="form-control" id="signupInputPassword2" placeholder="Confirm Password">
         </div>
         <div class="form-check">
           <input type="checkbox" class="form-check-input" id="signupCheck1">

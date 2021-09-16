@@ -18,7 +18,7 @@ from django.urls import path, include
 from . import views
 from django.conf import settings
 from django.conf.urls.static import static
-
+from auth_app.views import login_user, logout_user
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),
@@ -26,7 +26,9 @@ urlpatterns = [
     # url(r'^search/', search),
     # url(r'^index/', index)
     path('search', views.search, name="search"),
-    path('upload', views.upload, name="upload")
+    path('upload', views.upload, name="upload"),
+    path('logout', logout_user , name='logout'),
+    path('login', login_user, name='login')
 ]
 
 if settings.DEBUG:

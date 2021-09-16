@@ -3,13 +3,18 @@ from django.shortcuts import render, redirect
 import nltk
 from .forms import UploadFileForm
 from django.core.files.storage import FileSystemStorage
-
+from auth_app.models import User
 
 #########################################################
 
 
 def home(request):
     context = {'navigation': []}
+    is_authenticated = request.user.is_authenticated
+    username = ""
+    if is_authenticated:
+        username = request.user.username 
+    context = {'is_authenticated' : is_authenticated , 'username' : username }
     return render(request, 'plagDetector/home.html', context)
 
 
@@ -36,7 +41,12 @@ def search(request):
         text1 = request.POST.get('text1', None)
         text2 = request.POST.get('text2', None)
         final_list = plag(text1, text2)
-        context = {'navigation': final_list}
+        is_authenticated = request.user.is_authenticated
+        username = ""
+        if is_authenticated:
+            username = request.user.username 
+        context = {'navigation': final_list ,'is_authenticated' : is_authenticated , 'username' : username }
+        print(context)
         return render(request, 'plagDetector/home.html', context)
     else:
         return render(request, 'plagDetector/home.html')
@@ -59,6 +69,8 @@ def upload(request):
             fs.save(upload_file.name, upload_file, max_length=None)
 
     return render(request, 'plagDetector/home.html')
+
+
 
 # need to implement
 # only docx. or text files can be uploaded
