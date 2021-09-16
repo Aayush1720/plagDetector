@@ -32,6 +32,7 @@ def plag(text1, text2):
 
 # test function two check two input texts
 def search(request):
+    # search goes here
     if request.method == 'POST':
         text1 = request.POST.get('text1', None)
         text2 = request.POST.get('text2', None)
