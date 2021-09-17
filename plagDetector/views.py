@@ -20,12 +20,13 @@ def home(request):
 
 # test function to compare two texts -Tanmay/Aadarsh/Aayush
 def plag(text1, text2):
+
     str1 = ''.join(text1)
     str2 = ''.join(text2)
     sent_text1 = str1.split('.')
     sent_text2 = str2.split('.')
 
-    final_list = []
+    final_list = []  
     for z in sent_text1:
         # print(z)
         for y in sent_text2:

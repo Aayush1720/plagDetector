@@ -7,8 +7,8 @@
 
 
         <!-- navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(47, 49, 67);">
+  <a class="navbar-brand text-light" href="#">Plag Detector</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -16,24 +16,24 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <a class="nav-link text-light" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link text-light" href="#">Link</a>
       </li>
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
+        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Features
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
+          <a class="dropdown-item " href="#">Plag Detactor</a>
+          <a class="dropdown-item " href="#">Polarity</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+          <a class="dropdown-item " href="#">Analysis</a>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+        <a class="nav-link disabled text-light" href="#"></a>
       </li>
     </ul>
     {% if is_authenticated %}
@@ -142,7 +142,7 @@
 
 <br>  
    
- <div class="container">
+ <div class="container" >
    <div class="d-flex justify-content-center py-1" style="color: rgb(255, 255, 255); background-color: rgb(146, 96, 189);">
        Sameple Test of Plagarism over two text
      </div>
@@ -153,11 +153,11 @@
     <div class="row">
       <div class="col-sm border pb-3">
         <label for="textarea1">textarea 1</label>
-        <textarea class="form-control" id="textarea1" name="text1"  rows="5"></textarea>
+        <textarea class="form-control" id="textarea1" style="background-color: rgb(9, 44, 71); color: white;" name="text1"  rows="10"></textarea style>
       </div>
       <div class="col-sm border" >
         <label for="testarea2">textarea 2</label>
-    <textarea class="form-control" id="testarea2" name="text2" rows="5"></textarea>
+    <textarea class="form-control" id="testarea2" style="background-color: rgb(9, 44, 73); color: white;" name="text2" rows="10"></textarea>
       </div>
     </div>
     <div class="d-flex justify-content-center py-1">
@@ -165,23 +165,27 @@
     </div>
       </form>
  </div>
-    
+    <br>
 
+ <h1 style=" color: rgb(239, 126, 126);">Plagarized Content:</h1>
+ 
 
  {% for item in navigation %}
-       <p>{{item}}</p>
+ 
+       <p style="background-color: rgb(91, 62, 62); color: white;">{{item}}</p>
 {% endfor %}
 
 
 
 
 
-
+<br><br><br>  <br><br><br>  <br><br><br>  <br><br><br>  
 
 <!-- drag and drop file code starts -->
     <!-- UPLOAD FILES CODE HERE  -->
-<div class="container">
-  <p>Upload Files</p>
+<div class="container" style="background-color: rgb(9, 44, 73);">
+  <br>
+  <p class="text-light border-light">Upload Files</p>
   <div class="container p-3 d-flex justify-content-center border">
 
     <form method="POST" enctype="multipart/form-data">
@@ -192,21 +196,22 @@
  -->
           {% csrf_token %}
           <input type="file" name="document" multiple class="custom-file-input" id="file" onchange="javascript:updateList()">
-          <label class="custom-file-label" for="file">
-          <img width="30" src="https://image.flaticon.com/icons/svg/54/54565.svg" /> Upload Files</label>
+          
+          <img width="30" src="{% static './upload.png' %}"/> </label>
  
     </div>
 
     <div>
-      <ul id="fileList" class="file-list"></ul>
+      <ul id="fileList" class="file-list" style="color: white;"></ul>
     </div>
       {% if error %}
       <h6> {{error}} </h6>
       {% endif %}
-      <button type="submit" class="btn btn-dark">Upload Files</button>
+      <button type="submit" class="btn text-light border-light" style="background-color: rgb(61, 25, 42);">Upload Files</button>
       </form>
   
   </div>
+  <br>
 </div>
 
  <!-- UPLOAD CODE ENDS -->
@@ -214,7 +219,7 @@
 
 
     
-
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 
 
