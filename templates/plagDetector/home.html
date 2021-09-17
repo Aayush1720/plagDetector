@@ -1,239 +1,352 @@
 {% extends 'plagDetector/main.html' %}
 {% load static %}
 {% block content %}
-<link rel="stylesheet"  type="text/css" href="{% static './style.css' %}">
-<script src="{% static './customscripts.js'  %}"></script>
-
-
-
-        <!-- navbar -->
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(47, 49, 67);">
-  <a class="navbar-brand text-light" href="#">Plag Detector</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link text-light" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link text-light" href="#">Link</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Features
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item " href="#">Plag Detactor</a>
-          <a class="dropdown-item " href="#">Polarity</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item " href="#">Analysis</a>
-        </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled text-light" href="#"></a>
-      </li>
-    </ul>
-    {% if is_authenticated %}
-      <h4>Welcome {{username}}</h4>
-
-
-      <form class="form-inline my-2 my-lg-0">
-        
-         <a href=" {% url 'logout' %} " >
-              Logout
-      </a>
-      </form> 
-
-    {% else %}
-    <form class="form-inline my-2 my-lg-0">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signinmodal">
-        Login
-      </button>
-    </form>
-    &nbsp;
-    <form class="form-inline my-2 my-lg-0">
-      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#signupmodal">
-        SignUp
-      </button>
-    </form>
-    {% endif %}
-  </div>
-</nav>
- <!-- end navbar -->
-
-<!-- start signin modal -->
-<div class="modal fade" id="signinmodal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title-login" id="loginModalLabel">Sign in</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form method = "POST" class="modal-body" action = "{% url 'login' %}" >
-        {% csrf_token %}
-        <div class="form-group">
-          <label for="loginInputEmail1">Email address</label>
-          <input name="email" type="email" class="form-control" id="loginInputEmail1" aria-describedby="emailHelp2" placeholder="Enter email">
-          <small id="emailHelp2" class="form-text text-muted">We'll never share your email with anyone else.</small>
-        </div>
-        <div class="form-group">
-          <label for="loginInputPassword1">Password</label>
-          <input name="password" type="password" class="form-control" id="loginInputPassword1" placeholder="Password">
-        </div>
-        <div class="form-check">
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-      </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button> -->
-      </div>
-    </div>
-  </div>
-</div>
-<!-- end modal -->
-
-<!-- start signup modal -->
-<div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="signupModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title-signup" id="signupModalLabel">Sign up</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div class="form-group">
-          <label for="signupInputEmail1">Email address</label>
-          <input name="email" type="email" class="form-control" id="signupInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-        </div>
-        <div class="form-group">
-          <label for="signupInputPassword1">Password</label>
-          <input name="password" type="password" class="form-control" id="signupInputPassword1" placeholder="Password">
-        </div>
-        <div class="form-group">
-          <label for="signupInputPassword2">Confirm Password</label>
-          <input name="password2" type="password" class="form-control" id="signupInputPassword2" placeholder="Confirm Password">
-        </div>
-        <div class="form-check">
-          <input type="checkbox" class="form-check-input" id="signupCheck1">
-          <label class="form-check-label" for="signupCheck1">Check me out</label>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-      </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button> -->
-      </div>
-    </div>
-  </div>
-</div>
-<!-- end modal -->
-
-
-<br>  
    
- <div class="container" >
-   <div class="d-flex justify-content-center py-1" style="color: rgb(255, 255, 255); background-color: rgb(146, 96, 189);">
-       Sameple Test of Plagarism over two text
-     </div>
-
-      <!-- compare form staart -->
-      <form method="POST" action="/search">
-        {% csrf_token %}
-    <div class="row">
-      <div class="col-sm border pb-3">
-        <label for="textarea1">textarea 1</label>
-        <textarea class="form-control" id="textarea1" style="background-color: rgb(9, 44, 71); color: white;" name="text1"  rows="10"></textarea style>
-      </div>
-      <div class="col-sm border" >
-        <label for="testarea2">textarea 2</label>
-    <textarea class="form-control" id="testarea2" style="background-color: rgb(9, 44, 73); color: white;" name="text2" rows="10"></textarea>
-      </div>
-    </div>
-    <div class="d-flex justify-content-center py-1">
-      <button type="submit" class="btn btn-success">Test</button>
-    </div>
-      </form>
- </div>
-    <br>
-
- <h1 style=" color: rgb(239, 126, 126);">Plagarized Content:</h1>
- 
-
- {% for item in navigation %}
- 
-       <p style="background-color: rgb(91, 62, 62); color: white;">{{item}}</p>
-{% endfor %}
 
 
-
-
-
-<br><br><br>  <br><br><br>  <br><br><br>  <br><br><br>  
-
-<!-- drag and drop file code starts -->
-    <!-- UPLOAD FILES CODE HERE  -->
-<div class="container" style="background-color: rgb(9, 44, 73);">
-  <br>
-  <p class="text-light border-light">Upload Files</p>
-  <div class="container p-3 d-flex justify-content-center border">
-
-    <form method="POST" enctype="multipart/form-data">
-    <div class="custom-file">
-      <!-- <input type="file" class="custom-file-input" id="file" multiple onchange="javascript:updateList()">
-      <label class="custom-file-label" for="file">
-        <img width="30" src="https://image.flaticon.com/icons/svg/54/54565.svg" /> Upload Files</label>
- -->
-          {% csrf_token %}
-          <input type="file" name="document" multiple class="custom-file-input" id="file" onchange="javascript:updateList()">
-          
-          <img width="30" src="{% static './upload.png' %}"/> </label>
- 
-    </div>
-
-    <div>
-      <ul id="fileList" class="file-list" style="color: white;"></ul>
-    </div>
-      {% if error %}
-      <h6> {{error}} </h6>
-      {% endif %}
-      <button type="submit" class="btn text-light border-light" style="background-color: rgb(61, 25, 42);">Upload Files</button>
-      </form>
+  <!-- ***** Main Banner Area Start ***** -->
+  <section class="section main-banner" id="top" data-section="section1" 
   
-  </div>
-  <br>
-</div>
+  
+  >
+      <video autoplay muted loop id="bg-video">
+          <source src="static/assets/images/course-video.mp4" type="video/mp4" />
+      </video>
 
- <!-- UPLOAD CODE ENDS -->
-<!-- drag and drop file code ends  -->
+      <div class="video-overlay header-text">
+          <div class="caption">
+              <h2><em>Capture </em> the plag</h2>
+              <div class="main-button">
+                {% if is_authenticated %}
+                <div class="scroll-to-section"><a href="#section5">GO!</a></div>
+                {% else %}
+                <div class="scroll-to-section"><a href="#section2">GO!</a></div>
+                {% endif %}
+                <br>
+              </div>
+          </div>
+      </div>
+  </section>
+  <!-- ***** Main Banner Area End ***** -->
 
 
-    
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <section class="features">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4 col-12">
+          <div class="features-post">
+            <div class="features-content">
+              <div class="content-show">
+                <h4><i class="fa fa-pencil"></i>Easy to use</h4>
+              </div>
+              <div class="content-hide">
+                <p>We provide an aesthetic interface which is easy to use. All you have to do is upload all your files and let the website do the magic.</p>
+                <p class="hidden-sm">Curabitur id eros vehicula, tincidunt libero eu, lobortis mi. In mollis eros a posuere imperdiet.</p>
+                
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-12">
+          <div class="features-post second-features">
+            <div class="features-content">
+              <div class="content-show">
+                <h4><i class="fa fa-graduation-cap"></i>Robust backend</h4>
+              </div>
+              <div class="content-hide">
+                <p>We use a variety of algorithms and technique to make sure that our results are as accurate as possible.</p>
+                <p class="hidden-sm">Curabitur id eros vehicula, tincidunt libero eu, lobortis mi. In mollis eros a posuere imperdiet.</p>
+                <div class="scroll-to-section"><a href="#section2">More Info.</a></div>
+            </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-12">
+          <div class="features-post third-features">
+            <div class="features-content">
+              <div class="content-show">
+                <h4><i class="fa fa-book"></i>Results</h4>
+              </div>
+              <div class="content-hide">
+                <p>We provide the result in variety of ways. This includes one to one percentage of plagiarism between the documents , bar graphs and heats maps.
+                </p>
+                <p class="hidden-sm">Curabitur id eros vehicula, tincidunt libero eu, lobortis mi. In mollis eros a posuere imperdiet.</p>
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section why-us" data-section="section2">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-heading">
+            <h2>The algorithms that we use </h2>
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div id='tabs'>
+            <ul>
+              <li><a href='#tabs-1'>Cosine Similarity Measure
+              </a></li>
+              <li><a href='#tabs-2'>Jaccard Similarity Measure</a></li>
+              <li><a href='#tabs-3'> Longest Common Substring</a></li>
+            </ul>
+            <section class='tabs-content'>
+              <article id='tabs-1'>
+                <div class="row">
+                  <div class="col-md-6">
+                    <img src="assets/images/choose-us-image-01.png" alt="">
+                  </div>
+                  <div class="col-md-6">
+                    <h4>Cosine Similarity</h4>
+                    <p>Cosine Similarity is basically used to measure how two documents are similar irrespective of their sizes. A metric is used to measure the similarity between two documents. A metric can consist of strings, arrays and value objects in a coded algorithm. It measures the cosine of the angle between two vectors in a 2D multidimensional space. The main advantage of this method is it can conclude that two documents can be oriented together even if they're far apart because of size irregularities. Like the other techniques stated above, the result value of cosine similarity ranges between 0 and 1. The similarity percentage is less if the cosine angle is big and high when the angle is small.
+                    </p>
+                  </div>
+                </div>
+              </article>
+              <article id='tabs-2'>
+                <div class="row">
+                  <div class="col-md-6">
+                    <img src="assets/images/choose-us-image-02.png" alt="">
+                  </div>
+                  <div class="col-md-6">
+                    <h4>The Jaccard distance</h4>
+                    <p>The Jaccard distance is also known as Tanimoto coefficient. This measures similarity as the intersection divided by the union of the documents. The Jaccard coefficient compares the sum weight of shared terms to the sum weight of terms that are present in either of the two documents but are not the shared terms. The range of the similarity measure for the Jaccard coefficient is between 0 and 1. 
+                    </p>
+                  </div>
+                </div>
+              </article>
+              <article id='tabs-3'>
+                <div class="row">
+                  <div class="col-md-6">
+                    <img src="assets/images/choose-us-image-03.png" alt="">
+                  </div>
+                  <div class="col-md-6">
+                    <h4>longest common substring</h4>
+                    <p>Another Dynamic Programming (DP) approach considered in this proposed similarity detection engine after Levenshtein distance is the longest common substring (LCS) for assuring string similarity without any resulting numerical value. Being a DP implementation, this algorithm has a time complexity of O(nm) where space is utilized more than time. The definition of LCS is simple as it identifies a substring in's 1' and checks for the same in's 2'. The algorithm also has the functionality of keeping track of the substring's maximum length and displaying it on the console.</p>
+                  </div>
+                </div>
+              </article>
+            </section>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% if notAuth %}
+  <section class="section coming-soon" data-section="section3">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-5">
+          <div class="left-content">
+            <div class="top-content">
+              <h6>Register your free account and <em>get immediate</em> access to the plagiarism checker</h6>
+            </div>
+            <form method = "POST" id="contact"  action = "{% url 'login' %}">
+              {% csrf_token %}
+              <div class="row">
+                <div class="col-md-12">
+                  <fieldset>
+                    <input name="username" type="text" class="form-control" id="name" placeholder="user Name" required="">
+                  </fieldset>
+                </div>
+                <div class="col-md-12">
+                  <fieldset>
+                    <input name="email" type="text" class="form-control" id="email" placeholder="Your Email" required="">
+                  </fieldset>
+                </div>
+                <div class="col-md-12">
+                  <fieldset>
+                    <input name="password" type="password" class="form-control" id="phone-number" placeholder="password" required="">
+                  </fieldset>
+                </div>
+                <div class="col-md-12">
+                  <fieldset>
+                    <button type="submit" id="form-submit" class="button">Sign Up</button>
+                  </fieldset>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-1"><em>  </em> </div>
+        <div class="col-md-5">
+          <div class="right-content">
+            <div class="top-content">
+              <h6>Login into your account and <em>get immediate</em> access to our plagiarism checker</h6>
+            </div>
+            <form id="contact" action="{% url 'login' %}" method = "POST">
+              {% csrf_token %}
+              <div class="row">
+                
+                <div class="col-md-12">
+                  <fieldset>
+                    <input name="email" type="email" class="form-control" id="email" placeholder="Your Email" required="">
+                  </fieldset>
+                </div>
+                <div class="col-md-12">
+                  <fieldset>
+                    <input name="password" type="password" class="form-control" id="phone-number" placeholder="password" required="">
+                  </fieldset>
+                </div>
+                <div class="col-md-12">
+                  <fieldset>
+                    <button type="submit" id="form-submit" class="button">Login</button>
+                  </fieldset>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="section contact" data-section="section6">
+    <div class="container" >
+      <div class="d-flex justify-content-center py-1" style="color: rgb(255, 255, 255); background-color: rgb(212, 156, 4);">
+          Sameple Test of Plagarism over two text
+        </div>
+   
+         <!-- compare form staart -->
+         <form method="POST" action="/search">
+           {% csrf_token %}
+       <div class="row">
+         <div class="col-sm border pb-3">
+           <label for="textarea1">textarea 1</label>
+           <textarea class="form-control" id="textarea1" style="background-color: rgb(9, 44, 71); color: white;" name="text1"  rows="10"></textarea style>
+         </div>
+         <div class="col-sm border" >
+           <label for="testarea2">textarea 2</label>
+       <textarea class="form-control" id="testarea2" style="background-color: rgb(9, 44, 73); color: white;" name="text2" rows="10"></textarea>
+         </div>
+       </div>
+       <div class="d-flex justify-content-center py-1">
+         <button type="submit" class="btn btn-success">Test</button>
+       </div>
+         </form>
+    </div>
+       <br>
+  </section>
 
 
+  <section class="section courses" data-section="section4">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-heading">
+            <h2>Our Team</h2>
+          </div>
+        </div>
+        <div class="owl-carousel owl-theme">
+          <div class="item">
+            <img src="static/assets/images/aayush.jpeg" alt="Author 1">
+            <div class="down-content">
+              <h4>Aayush Choubey</h4>
+              <p>
+                Student at IIIT Pune| Python | django | ML , data science enthusiast.
+               
+              </p>
+            </div>
+          </div>
+          <div class="item">
+            <img src="static/assets/images/aadarsh.jfif" alt="aadarsh goyal">
+            <div class="down-content">
+              <h4>Aadarsh Goyal</h4>
+              <p>Student at IIIT Pune || Codeforces Specialist || MERN Stack Developer</p>
+              
+            </div>
+          </div>
+          <div class="item">
+            <img src="static/assets/images/tanmay.jfif" alt="tanmay modi">
+            <div class="down-content">
+              <h4>Tanmay Modi</h4>
+              <p>Design & Event Manager at E-Cell IIIT Pune | Game🎮 Dev
+                Pune.</p>
+             
+            </div>
+          </div>
+          <div class="item">
+            <img src="static/assets/images/prasad.jfif" alt="prasad dalwee">
+            <div class="down-content">
+              <h4>Prasad Dalwee</h4>
+              <p>Intern at Internshala | Public Relations Manager at E-Cell IIITP</p>
+          
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
 
+  <section class="section video" data-section="section5">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6 align-self-center">
+          <div class="left-content">
+            <span>our presentation is for you</span>
+            <h4>This was all about <em> plagsearch.com </em></h4>
+            <p>
+              We see a need for an automated peer-to-peer plagiarism detector that can take in hundreds of documents and can produce relevant insights. We, therefore, aim to research and develop a lightweight site that can satisfy the needs at an institutional level and has low computational costs and yet at the same time has a very good accuracy of detection. 
+              
+              <br>Following is the link of our powerpoint presentation which tells everything about our research and implementation</p>
+            <div class="main-button"><a rel="nofollow" href="https://fb.com/templatemo" target="_parent">PPT URL</a></div>
+          </div>
+        </div>
+      
+      </div>
+    </div>
+  </section>
 
-
-
-
-
-
-
-
-
-
-
+  <section class="section contact" data-section="section6">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="section-heading">
+            <h2>Let’s Keep In Touch</h2>
+          </div>
+        </div>
+        <div class="col-md-12">
+        
+        <!-- Do you need a working HTML contact-form script?
+                	
+                    Please visit https://templatemo.com/contact page -->
+                    
+          <form id="contact" action="" method="post" class="center" >
+            <div class="row-center">
+              <div class="col-md-6">
+                  <fieldset>
+                    <input name="name" type="text" class="form-control" id="name" placeholder="Your Name" required="">
+                  </fieldset>
+                </div>
+                <div class="col-md-6">
+                  <fieldset>
+                    <input name="email" type="text" class="form-control" id="email" placeholder="Your Email" required="">
+                  </fieldset>
+                </div>
+              <div class="col-md-12">
+                <fieldset>
+                  <textarea name="message" rows="6" class="form-control" id="message" placeholder="Your message..." required=""></textarea>
+                </fieldset>
+              </div>
+              <div class="col-md-12">
+                <fieldset>
+                  <button type="submit" id="form-submit" class="button">Send Message Now</button>
+                </fieldset>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
 
 
 {% endblock content %}

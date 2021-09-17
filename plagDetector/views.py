@@ -11,10 +11,11 @@ from auth_app.models import User
 def home(request):
     context = {'navigation': []}
     is_authenticated = request.user.is_authenticated
+    notAuth = not is_authenticated
     username = ""
     if is_authenticated:
         username = request.user.username 
-    context = {'is_authenticated' : is_authenticated , 'username' : username }
+    context = {'is_authenticated' : is_authenticated , 'username' : username, "notAuth" : notAuth }
     return render(request, 'plagDetector/home.html', context)
 
 
