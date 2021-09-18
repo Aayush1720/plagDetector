@@ -10,7 +10,7 @@
   
   >
       <video autoplay muted loop id="bg-video">
-          <source src="static/assets/images/course-video.mp4" type="video/mp4" />
+          <source src="static/assets/images/yellow_nodes.mp4" type="video/mp4" />
       </video>
 
       <div class="video-overlay header-text">
@@ -18,9 +18,9 @@
               <h2><em>Capture </em> the plag</h2>
               <div class="main-button">
                 {% if is_authenticated %}
-                <div class="scroll-to-section"><a href="#section5">GO!</a></div>
+                <div class="scroll-to-section"><a href="#section6">GO!</a></div>
                 {% else %}
-                <div class="scroll-to-section"><a href="#section2">GO!</a></div>
+                <div class="scroll-to-section"><a href="#section3">GO!</a></div>
                 {% endif %}
                 <br>
               </div>
@@ -99,7 +99,7 @@
               <article id='tabs-1'>
                 <div class="row">
                   <div class="col-md-6">
-                    <img src="assets/images/choose-us-image-01.png" alt="">
+                   
                   </div>
                   <div class="col-md-6">
                     <h4>Cosine Similarity</h4>
@@ -111,7 +111,7 @@
               <article id='tabs-2'>
                 <div class="row">
                   <div class="col-md-6">
-                    <img src="assets/images/choose-us-image-02.png" alt="">
+                  
                   </div>
                   <div class="col-md-6">
                     <h4>The Jaccard distance</h4>
@@ -123,7 +123,7 @@
               <article id='tabs-3'>
                 <div class="row">
                   <div class="col-md-6">
-                    <img src="assets/images/choose-us-image-03.png" alt="">
+              
                   </div>
                   <div class="col-md-6">
                     <h4>longest common substring</h4>
@@ -228,9 +228,17 @@
          </div>
        </div>
        <div class="d-flex justify-content-center py-1">
-         <button type="submit" class="btn btn-success">Test</button>
+         <button onclick="myFunction()" type="submit" class="btn btn-success">Test</button>
        </div>
          </form>
+         
+
+<script>
+function myFunction() {
+  alert("The cosine similarity of the resuls is {{result}}");
+}
+</script>
+
     </div>
        <br>
   </section>

@@ -35,21 +35,22 @@ def plag(text1, text2):
     str2 = ''.join(text2)
 
     similarity = get_similarity(str1, str2)
-    print(similarity)
+    return similarity[0]
 
 
 # test function two check two input texts
 def search(request):
     # search goes here
     if request.method == 'POST':
+        final_list = "cosine result"
         text1 = request.POST.get('text1', None)
         text2 = request.POST.get('text2', None)
-        final_list = plag(text1, text2)
+        cosine_result = plag(text1, text2)
         is_authenticated = request.user.is_authenticated
         username = ""
         if is_authenticated:
             username = request.user.username
-        context = {'navigation': final_list, 'is_authenticated': is_authenticated, 'username': username}
+        context = {'result': cosine_result, 'is_authenticated': is_authenticated, 'username': username}
         print(context)
         return render(request, 'plagDetector/home.html', context)
     else:
