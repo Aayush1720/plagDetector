@@ -319,6 +319,7 @@
     <div class="section-heading">
       <h2>Upload Assignment files</h2>
     </div>
+
     <div class="row">
 
       <div class="col-md-5">
@@ -326,13 +327,13 @@
           <div class="top-content">
             <h6>Upload Files</h6>
           </div>
-          <form method="POST" id="contact" action="{% url 'login' %}">
-
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
             <div class="row">
 
               <fieldset>
 
-                <input type="file" name="document" id="actual-btn" style="background-color: rgb(24, 14, 89);
+                <input type="file" name="document" style="background-color: rgb(24, 14, 89);
                 color: white;
                 padding: 0.5rem;
                 font-family: sans-serif;
@@ -352,6 +353,7 @@
         </div>
       </div>
     </div>
+
   </div>
 </section>
 

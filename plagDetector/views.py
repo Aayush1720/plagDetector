@@ -61,11 +61,12 @@ def search(request):
 # files are stored in the ./media folder of the directory
 def upload(request):
     if request.method == 'POST':
-        for y, file in enumerate(request.FILES.getlist("document")):
-            allowed_ext = ['txt', 'docx', 'doc']
-            if file.name.split('.')[-1] not in allowed_ext:
-                context = {'error': 'file extension not allowed, please upload a txt/doc/docx file!'}
-                return render(request, 'plagDetector/home.html', context)
+        # for y, file in enumerate(request.FILES.getlist("document")):
+        #     allowed_ext = ['txt', 'docx', 'doc']
+        #     if file.name.split('.')[-1] not in allowed_ext:
+        #         context = {'error': 'file extension not allowed, please upload a txt/doc/docx file!'}
+        #         print("error occured")
+        #         return render(request, 'plagDetector/home.html', context)
 
         for x, upload_file in enumerate(request.FILES.getlist("document")):
             print(upload_file.name)
