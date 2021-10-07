@@ -156,6 +156,95 @@ class similarity_algorithms:
 
         return p
 
+    def kmp_similarity(self, l1, l2):
+
+        def prepare_content(content):
+            # print('in 1')
+            content = content.translate(str.maketrans('', '', string.punctuation))
+            stop_words = set(stopwords.words('english'))
+            word_tokens = word_tokenize(content)
+            filtered_content = []
+            porter = PorterStemmer()
+            for w in word_tokens:
+                if w not in stop_words:
+                    w = w.lower()
+                    word = porter.stem(w)
+                    filtered_content.append(word)
+            text = filtered_content
+            text = "".join(text)
+            return text
+
+        def calculate(file1, file2, kgram):
+            # print('in 2')
+            total = 1
+            hit = 0
+
+            for i in range(len(file1) - kgram):
+                hit += start(file2, file1[i:i + kgram])
+                # print(file1[i:i+kgram],hit,total)
+                total += 1
+
+            plag_rate = hit * 100 / total
+            return plag_rate
+
+        def start(text, pattern):
+            # print('in k1')
+
+            find_lps(pattern)
+            found = search(pattern, text)
+            return found
+
+        def find_lps(pattern):
+            # print('in k2')
+            i = 0
+            j = 1
+            m = len(pattern)
+            match = 0
+            nonlocal lps
+            lps = [0] * (len(pattern) + 1)
+            while j < m:
+                if pattern[j] == pattern[i + match]:
+                    match += 1
+                    lps[j + 1] = match
+
+                elif match > 0:
+                    match = 0
+                    j -= 1
+                j += 1
+
+        def search(pattern, text):
+            # print('in k3')
+            pattern = '0' + pattern
+            m = len(pattern)
+            n = len(text)
+            i = 0
+            j = 0
+            nonlocal lps
+            while i < n and j < m - 1:
+                # print("i= ",i, " : ",text[i], " j=",j," ", pattern[j])
+                if text[i] == pattern[1 + j]:
+                    j += 1
+                    i += 1
+
+                elif j == 0:
+                    i += 1
+                else:
+                    j = lps[j]
+
+            if j == m - 1:
+                # print ('found')
+                return 1
+            else:
+                # print ('not found')
+                return 0
+
+        kgrams = 5
+        lps = []
+        file1 = prepare_content(l1)
+        file2 = prepare_content(l2)
+        rate = calculate(l1, l2, kgrams)
+        return rate
+
 
 class plagiarism_detector:
 
@@ -178,7 +267,7 @@ class plagiarism_detector:
         tokens_o, tokens_p = self.preprocess(orig, plag)
         output = self.get_algorithm_output(tokens_o, tokens_p)
         # currently returning the max similarity
-        # return output[3]
+        # return output[4]
         return max(output)
 
     def preprocess(self, orig, plag):
@@ -224,5 +313,6 @@ class plagiarism_detector:
         maxlcs = sa.max_lcs(s1, s2)
         cosine = sa.cosine_similarity(l1, l2)
         rabin_karp = sa.rabin_karp_similarity(l1, l2)
+        kmp = sa.kmp_similarity(s1, s2)
 
-        return cosine, jaccard, maxlcs, rabin_karp
+        return cosine, jaccard, maxlcs, rabin_karp, kmp

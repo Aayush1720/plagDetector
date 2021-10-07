@@ -68,7 +68,7 @@ def upload(request):
             fs.save(upload_file.name, upload_file, max_length=None)
 
         doc_names, doc_list = get_doc_list()
-        print(doc_list)
+        # print(doc_list)
         print(get_similarity(doc_list))
     return render(request, 'plagDetector/home.html')
 
