@@ -266,74 +266,75 @@
 
 <!-- compare form ends here -->
 
-
-
-
-<!-- this is to added in serated pages starts-->
-
 <section class="section coming-soon" data-section="section4">
   <div class="container">
-    <div class="section-heading">
-      <h2>create project</h2>
-    </div>
-    <div class="row">
+    <h1 style="color: white;"> Results</h1>
+    <br><br><br>
+    <h2 style="color: white;">Heat Map</h2>
 
-      <div class="col-md-5">
-        <div class="left-content">
-          <div class="top-content">
-            <h6>Crete assignment</h6>
-          </div>
-          <form method="POST" id="contact" action="{% url 'login' %}">
+    <table style="overflow-y:scroll;
+    height: 75%;
+    display:block;
+    overflow-x: scroll;
+    padding: 10px;
+ ">
+      {% for x in result %}
+      <tr>
+        <h1 style="color: white;">
+          {% for y in x %}
+          <td style="color: white; border: 2px solid white; padding: 5px; ">
+            {{y}}
+          </td>
+          {% endfor %}
 
-            <div class="row">
-              <div class="col-md-12">
-                <fieldset>
-                  <input name="username" type="text" class="form-control" id="name" placeholder="Assignment Title"
-                    required="true">
-                </fieldset>
-              </div>
-              <div class="col-md-12">
-                <fieldset>
-                  <input name="email" type="number" class="form-control" id="email" placeholder="Minimum % plagiarism"
-                    min="0" max="100" step="0.01" required="true">
-                </fieldset>
-              </div>
 
-              <div class="col-md-12">
-                <fieldset>
-                  <button type="submit" id="form-submit" class="button">Create Assignment</button>
-                </fieldset>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+        </h1>
+      </tr>
+      {% endfor %}
+    </table>
+
   </div>
+
+
 </section>
+
+
 
 <!-- upload assignment files -->
 
 <section class="section coming-soon" data-section="section4">
   <div class="container">
-    <div class="section-heading">
-      <h2>Upload Assignment files</h2>
-    </div>
+
+
+
+
 
     <div class="row">
-
       <div class="col-md-5">
         <div class="left-content">
           <div class="top-content">
-            <h6>Upload Files</h6>
+            <h6>Create Assignment</h6>
           </div>
           <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="row">
+              <div class="col-md-12">
+                <fieldset>
+                  <input name="assignment_name" type="text" class="form-control" id="assignment_name"
+                    placeholder="Assignment Title" required="true">
+                </fieldset>
+              </div>
+              <div class="col-md-12">
+                <fieldset>
+                  <input name="percentage_" type="number" class="form-control" id="percentage_"
+                    placeholder="Minimum % plagiarism" min="0" max="100" step="0.01" required="true">
+                </fieldset>
+              </div>
+              <div class="col-md-12">
+                <fieldset>
 
-              <fieldset>
-
-                <input type="file" name="document" style="background-color: rgb(24, 14, 89);
+                  <input type="file" name="document" required='true' style="background-color: rgb(24, 14, 89);
+                  opacity: 50%;
                 color: white;
                 padding: 0.5rem;
                 font-family: sans-serif;
@@ -341,8 +342,8 @@
                 cursor: pointer;
                 margin-top: 1rem;" multiple />
 
-              </fieldset>
-
+                </fieldset>
+              </div>
               <div class="col-md-12">
                 <fieldset>
                   <button type="submit" id="form-submit" class="button">Upload Files</button>
@@ -481,3 +482,25 @@
 
 
 {% endblock content %}
+
+
+<script>
+  function find_color(g) {
+    console.log(g);
+    g = 30;
+    var n = document.getElementById("percentage_").value;
+
+    if (x == NaN)
+      return "transparent";
+    if (x == 0 && n == 0) {
+      return "green";
+    }
+    if (x >= n) {
+      return "red";
+    }
+    if (x <= n / 2) {
+      return "green";
+    }
+    return "yellow";
+  }
+</script>
