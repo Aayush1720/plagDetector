@@ -282,9 +282,22 @@
       <tr>
         <h1 style="color: white;">
           {% for y in x %}
-          <td style="color: white; border: 2px solid white; padding: 5px; ">
+
+          {% if y in doc_titles or y == "___" %}
+          <td style="color: white; border: 2px solid white; padding: 5px;">
             {{y}}
           </td>
+          {% elif y >= threshold %}
+          <td style="color: white; border: 2px solid white; padding: 5px; background-color: red;">
+            {{y}}
+          </td>
+          {% else %}
+          <td style="color: white; border: 2px solid white; padding: 5px;">
+            {{y}}
+          </td>
+          {% endif %}
+
+
           {% endfor %}
 
 

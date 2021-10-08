@@ -58,11 +58,12 @@ def upload(request):
     result = []
     doc_titles = []
     # list of students over threshold vaues
-
+    threshold = 0.0
     doc_titles.append('___')
     if request.method == 'POST':
         assignment_name = request.POST['assignment_name']
         percentage_ = request.POST['percentage_']
+        threshold = percentage_
         # for y, file in enumerate(request.FILES.getlist("document")):
         #     allowed_ext = ['txt', 'docx', 'doc']
         #     if file.name.split('.')[-1] not in allowed_ext:
@@ -92,23 +93,17 @@ def upload(request):
     #rounding off values 
     Matrix = []
     Matrix.append(doc_titles)
-
+    i=0
     for x in result:
+        i+=1
         temp = []
-        for title in doc_titles:
-            if title == "___":
-                continue
-            temp.append(title)
-        
-            for y in x:
-            
-                g = "{:.2f}".format(y)
-                temp.append(g)
-
-            break
+        temp.append(doc_titles[i])
+        for y in x:
+            g = "{:.2f}".format(y)
+            temp.append(g)
         Matrix.append(temp)
     
-    context = {"dow":daysOfWeek,"result":Matrix} 
+    context = {"dow":daysOfWeek,"result":Matrix,'limit':threshold,'doc_titles':doc_titles} 
     return render(request, 'plagDetector/home.html',context)
 
 
