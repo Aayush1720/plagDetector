@@ -55,12 +55,14 @@ def search(request):
 # function to upload multiples files
 # files are stored in the ./media folder of the directory
 def upload(request):
+    show = False
     result = []
     doc_titles = []
     # list of students over threshold vaues
     threshold = 0.0
     doc_titles.append('___')
     if request.method == 'POST':
+        show = True
         assignment_name = request.POST['assignment_name']
         percentage_ = request.POST['percentage_']
         threshold = percentage_
@@ -92,6 +94,39 @@ def upload(request):
 
     #rounding off values 
     Matrix = []
+    plag_list = []
+    plag_names = set()
+    tr = []
+    tr.append("Filename1")
+    tr.append("Filename2")
+    tr.append("% Plagiarism")
+    plag_list.append(tr)
+    tr=[]
+
+
+    #plag list matrix
+    x,y = 1,1
+    for a in result:
+        y=1
+    
+        for b in a:
+             if y > x:
+                break
+             tr=[]
+             g = "{:.2f}".format(b)
+             if g > percentage_:
+                 plag_names.add(doc_titles[x])
+                 tr.append(doc_titles[x])
+                 tr.append(doc_titles[y])
+                 tr.append(g)
+                 plag_list.append(tr)
+             y+=1
+        x+=1
+    for tt in plag_list:
+        print(tt , "___________________________________")
+                
+
+    #creating output result matrix
     Matrix.append(doc_titles)
     i=0
     for x in result:
@@ -103,8 +138,9 @@ def upload(request):
             temp.append(g)
         Matrix.append(temp)
     
-    context = {"dow":daysOfWeek,"result":Matrix,'limit':threshold,'doc_titles':doc_titles} 
-    return render(request, 'plagDetector/home.html',context)
+    
+    context = {"names":plag_names,"result":Matrix,'limit':threshold,'doc_titles':doc_titles,"plag_list": plag_list, "show":show} 
+    return render(request, 'plagDetector/upload.html',context)
 
 
 def parse_file(path):
