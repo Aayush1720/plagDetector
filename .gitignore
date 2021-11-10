@@ -4,3 +4,4 @@ _pycache_
 .idea
 plagDetector/__pycache__
 media
+plagDetector/secrets.py
