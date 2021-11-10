@@ -114,7 +114,7 @@ def upload(request):
                 break
              tr=[]
              g = "{:.2f}".format(b)
-             if g > percentage_:
+             if g > percentage_ and x != y:
                  plag_names.add(doc_titles[x])
                  tr.append(doc_titles[x])
                  tr.append(doc_titles[y])
