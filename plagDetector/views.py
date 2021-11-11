@@ -7,6 +7,14 @@ from .algorithms import plagiarism_detector
 import os
 from .document_parser import document_parser
 
+from docx import Document
+from docx.shared import Inches, Cm
+import statistics
+from pylab import rcParams
+import seaborn as sns
+import matplotlib as plt
+
+
 #########################################################
 
 
@@ -17,9 +25,9 @@ def home(request):
     username = ""
     if is_authenticated:
         username = request.user.username
-    
-    Matrix = [['x','a','b','c'],['a',1,3,5],['b', 4,7,34],['c',32,8,43]]
-    context = {'is_authenticated': is_authenticated, 'username': username, "notAuth": notAuth, 'result':Matrix,}
+
+    Matrix = [['x', 'a', 'b', 'c'], ['a', 1, 3, 5], ['b', 4, 7, 34], ['c', 32, 8, 43]]
+    context = {'is_authenticated': is_authenticated, 'username': username, "notAuth": notAuth, 'result': Matrix, }
     return render(request, 'plagDetector/home.html', context)
 
 
@@ -65,7 +73,7 @@ def upload(request):
         show = True
         assignment_name = request.POST['assignment_name']
         percentage_ = request.POST['percentage_']
-        threshold = percentage_
+        threshold = float(percentage_)
         # for y, file in enumerate(request.FILES.getlist("document")):
         #     allowed_ext = ['txt', 'docx', 'doc']
         #     if file.name.split('.')[-1] not in allowed_ext:
@@ -81,66 +89,68 @@ def upload(request):
             fs.save(upload_file.name, upload_file, max_length=None)
 
         doc_names, doc_list = get_doc_list()
-        #print(doc_list)
+        # print(doc_list)
         temp = get_similarity(doc_list)
         for cc in temp:
             result.append(cc)
-    
-        print(get_similarity(doc_list))
 
-    #test list (to be removed)
+        # print(get_similarity(doc_list))
+        print(temp)
+
+        ax = sns.heatmap(result, linewidth=0.5, annot=True)
+
+        ax.figure.savefig(f'./reports/heatmap-{assignment_name}.png')  # add this line before show()
+        # plt.show()
+        generate_report("test subject", assignment_name, result, threshold)
+
+    # test list (to be removed)
     daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 
-
-    #rounding off values 
+    # rounding off values
     Matrix = []
     plag_list = []
     plag_names = set()
-    tr = []
-    tr.append("Filename1")
-    tr.append("Filename2")
-    tr.append("% Plagiarism")
+    tr = ["Filename1", "Filename2", "% Plagiarism"]
     plag_list.append(tr)
-    tr=[]
+    tr = []
 
-
-    #plag list matrix
-    x,y = 1,1
+    # plag list matrix
+    x, y = 1, 1
     for a in result:
-        y=1
-    
-        for b in a:
-             if y > x:
-                break
-             tr=[]
-             g = "{:.2f}".format(b)
-             if g > percentage_ and x != y:
-                 plag_names.add(doc_titles[x])
-                 tr.append(doc_titles[x])
-                 tr.append(doc_titles[y])
-                 tr.append(g)
-                 plag_list.append(tr)
-             y+=1
-        x+=1
-    for tt in plag_list:
-        print(tt , "___________________________________")
-                
+        y = 1
 
-    #creating output result matrix
+        for b in a:
+            if y > x:
+                break
+            tr = []
+            g = "{:.2f}".format(b)
+            if g > percentage_ and x != y:
+                plag_names.add(doc_titles[x])
+                tr.append(doc_titles[x])
+                tr.append(doc_titles[y])
+                tr.append(g)
+                plag_list.append(tr)
+            y += 1
+        x += 1
+    for tt in plag_list:
+        print(tt, "___________________________________")
+
+    # creating output result matrix
     Matrix.append(doc_titles)
-    i=0
+    i = 0
     for x in result:
-        i+=1
+        i += 1
         temp = []
         temp.append(doc_titles[i])
         for y in x:
             g = "{:.2f}".format(y)
             temp.append(g)
         Matrix.append(temp)
-    
-    
-    context = {"names":plag_names,"result":Matrix,'limit':threshold,'doc_titles':doc_titles,"plag_list": plag_list, "show":show} 
-    return render(request, 'plagDetector/upload.html',context)
+
+    context = {"names": plag_names, "result": Matrix, 'limit': threshold, 'doc_titles': doc_titles,
+               "plag_list": plag_list, "show": show}
+
+    return render(request, 'plagDetector/upload.html', context)
 
 
 def parse_file(path):
@@ -166,14 +176,93 @@ def get_doc_list():
     return doc_names, doc_list
 
 
-def find_color(x,n):
-    if x == 0 or n ==0:
+def find_color(x, n):
+    if x == 0 or n == 0:
         return "green"
-    if x>=n:
+    if x >= n:
         return "red"
-    if n<=10:
-        if x <= n/2:
+    if n <= 10:
+        if x <= n / 2:
             return "green"
         else:
             return "yellow"
-    
+
+
+# subject, assignment, similarity matrix that was passed to heatmap, threshold
+def generate_report(sub, asg, matrix, threshold):
+    def template():
+        groups = calculate(threshold)
+        s = make_string(groups)
+        l = stats()
+
+        doc = Document()
+        sections = doc.sections
+        for section in sections:
+            section.top_margin = Cm(2.75)
+            section.bottom_margin = Cm(0.25)
+            section.left_margin = Cm(1.5)
+            section.right_margin = Cm(0.1)
+
+        doc.add_heading('Similarity Report\n', level=0)
+        doc.add_paragraph('Subject: ' + sub)
+        doc.add_paragraph('Assignment: ' + asg)
+        doc.add_paragraph('Threshold assigned: ' + str(threshold) + '%')
+        doc.add_paragraph('Assignments found to have similarity above threshold :' + str(list(groups.keys())))
+        doc.add_heading('Assignments and their respective matches with similarity above threshold :', level=2)
+        doc.add_paragraph(s)
+        doc.add_heading('General statistics:', level=2)
+        doc.add_paragraph('Total assignments above similarity threshold :' + str(len(groups)))
+        doc.add_paragraph('Average %similarity :' + str(l[4]) + '%')
+        doc.add_paragraph('Median %similarity :' + str(l[5]) + '%')
+        doc.add_paragraph('Total assignments with similarity above:\n\t 25% : ' + str(l[0])
+                          + '\n\t 50% : ' + str(l[1])
+                          + '\n\t 75% : ' + str(l[2])
+                          + '\n\t 90% : ' + str(l[3]))
+
+        doc.add_page_break()
+        doc.add_heading('Similarity Matrix - Heatmap', level=0)
+        # (f'./reports/heatmap-{assignment_name}.png')
+        doc.add_picture(f'./reports/heatmap-{asg}.png', width=Inches(8), height=Inches(8))
+
+        doc.save(f'./reports/{asg}.docx')
+
+    def calculate(threshold):
+        groups = {}
+        for i in range(len(matrix)):
+            l = []
+            for j in range(len(matrix[i])):
+                if i != j and matrix[i][j] > threshold:
+                    l.append(j + 1)
+                groups[i + 1] = l
+
+        for i in range(1, len(groups) + 1):
+            if len(groups[i]) == 0:
+                del groups[i]
+        return groups
+
+    def make_string(groups):
+        s = '\n'
+        for i in groups:
+            s += '\t' + str(i) + ' : ' + str(groups[i]) + ' \n'
+        return s
+
+    def stats():
+        l = []
+        l.append(len(calculate(25)))
+        l.append(len(calculate(50)))
+        l.append(len(calculate(75)))
+        l.append(len(calculate(90)))
+        a = means()
+        l.append(a[0])
+        l.append(a[1])
+        return l
+
+    def means():
+        l = []
+        n = len(matrix)
+        for i in range(n):
+            for j in range(i + 1, n):
+                l.append(matrix[i][j])
+        return [round(statistics.mean(l), 2), round(statistics.median(l), 2)]
+
+    template()
