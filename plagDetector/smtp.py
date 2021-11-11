@@ -11,17 +11,18 @@ gmail = secrets.EMAIL
 password = secrets.PASSWORD
 
 message = MIMEMultipart('mixed')
-message['From'] = 'Contact <{sender}>'.format(sender=gmail)
+message['From'] = '⛳ Capture-The-Plag ⛳'
 message['To'] = 'aadarsh.goyal11@gmail.com;aayushchoubey19@cse.iiitp.ac.in;tanmaymodi19@cse.iiitp.ac.in;prasaddalwee19@cse.iiitp.ac.in'
 # message['CC'] = 'contact@company.com'
-message['Subject'] = 'Hello from smtp'
+message['Subject'] = 'Plagiarism Report - CTP'
 
 # message for the user to be updated
-msg_content = '<h4>Hi There,<br> This is a testing message.</h4>\n'
+assignment_name = "ass3"
+msg_content = f'Hi There,<br><br> Please find the attached auto generated report for your plagiarism-check of the assignment - {assignment_name}.<br><br>Regards, <br>Capture-The-Plag'
 body = MIMEText(msg_content, 'html')
 message.attach(body)
 
-attachmentPath = "../media/B_Tech - 5th CSE- New TT.pdf"
+attachmentPath = f"../reports/{assignment_name}.docx"
 try:
     with open(attachmentPath, "rb") as attachment:
         p = MIMEApplication(attachment.read(), _subtype="pdf")

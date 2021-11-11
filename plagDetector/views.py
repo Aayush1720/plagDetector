@@ -66,7 +66,7 @@ def upload(request):
     show = False
     result = []
     doc_titles = []
-    # list of students over threshold vaues
+    # list of students over threshold values
     threshold = 0.0
     doc_titles.append('___')
     if request.method == 'POST':
@@ -204,7 +204,7 @@ def generate_report(sub, asg, matrix, threshold):
             section.right_margin = Cm(0.1)
 
         doc.add_heading('Similarity Report\n', level=0)
-        doc.add_paragraph('Subject: ' + sub)
+        doc.add_paragraph('Email: ' + sub)
         doc.add_paragraph('Assignment: ' + asg)
         doc.add_paragraph('Threshold assigned: ' + str(threshold) + '%')
         doc.add_paragraph('Assignments found to have similarity above threshold :' + str(list(groups.keys())))
