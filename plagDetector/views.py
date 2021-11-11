@@ -15,12 +15,12 @@ import seaborn as sns
 import matplotlib
 import matplotlib.pyplot as plt
 
-
 import smtplib, ssl
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.application import MIMEApplication
 import secrets
+
 
 #########################################################
 
@@ -164,7 +164,7 @@ def upload(request):
         ax = sns.heatmap(result, linewidth=0.5, annot=True)
         ax.figure.savefig(f'./reports/heatmap-{assignment_name}.png')  # add this line before show()
         # plt.show()
-        generate_report(request.user.email, assignment_name, result, threshold)
+        generate_report(request.user.email, assignment_name, result, threshold, doc_names)
 
     # test list (to be removed)
     daysOfWeek = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -210,6 +210,8 @@ def upload(request):
             temp.append(g)
         Matrix.append(temp)
 
+    empty_media()
+
     context = {"names": plag_names, "result": Matrix, 'limit': threshold, 'doc_titles': doc_titles,
                "plag_list": plag_list, "show": show, "user_ass": assignment_name}
 
@@ -252,7 +254,7 @@ def find_color(x, n):
 
 
 # subject, assignment, similarity matrix that was passed to heatmap, threshold
-def generate_report(sub, asg, matrix, threshold):
+def generate_report(sub, asg, matrix, threshold, doc_list):
     def template():
         groups = calculate(threshold)
         s = make_string(groups)
@@ -270,7 +272,12 @@ def generate_report(sub, asg, matrix, threshold):
         doc.add_paragraph('Email: ' + sub)
         doc.add_paragraph('Assignment: ' + asg)
         doc.add_paragraph('Threshold assigned: ' + str(threshold) + '%')
-        doc.add_paragraph('Assignments found to have similarity above threshold :' + str(list(groups.keys())))
+        temp = ['\n\t' + str(i) + ' : ' + str(doc_list[i - 1]).split("\\")[-1] for i in groups.keys()]
+        final_string = ""
+        for i in temp:
+            final_string = final_string + i
+        doc.add_heading('Assignments found to have similarity above threshold :', level=2)
+        doc.add_paragraph(final_string)
         doc.add_heading('Assignments and their respective matches with similarity above threshold :', level=2)
         doc.add_paragraph(s)
         doc.add_heading('General statistics:', level=2)
@@ -329,3 +336,9 @@ def generate_report(sub, asg, matrix, threshold):
         return [round(statistics.mean(l), 2), round(statistics.median(l), 2)]
 
     template()
+
+
+def empty_media():
+    dir = "media"
+    for f in os.listdir(dir):
+        os.remove(os.path.join(dir, f))
