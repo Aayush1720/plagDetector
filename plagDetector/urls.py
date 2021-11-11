@@ -28,7 +28,8 @@ urlpatterns = [
     path('search', views.search, name="search"),
     path('upload', views.upload, name="upload"),
     path('logout', logout_user , name='logout'),
-    path('login', login_user, name='login')
+    path('login', login_user, name='login'),
+    path('generate_email/<str:user_ass>', views.generate_email, name='generate_email')
 ]
 
 if settings.DEBUG:
