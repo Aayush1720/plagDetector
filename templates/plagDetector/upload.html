@@ -231,16 +231,16 @@
   </div>
 </section>
 
-<section class="section courses" data-section="section5">
-  <div class="container-fluid">
-    <div class="section-heading">
-      <a href="/generateReport">
-        <h2 class="bg-warning">Generate Report</h2>
-      </a>
+<section class=" section courses" data-section="section5">
+                    <div class="container-fluid">
+                      <div class="section-heading">
+                        <a href="/generateReport">
+                          <h2 class="bg-warning">Generate Report</h2>
+                        </a>
 
-    </div>
+                      </div>
 
-  </div>
+                    </div>
 </section>
 
 {% endif %}
@@ -253,33 +253,33 @@
 <!-- upload assignment files -->
 
 <section class=" section coming-soon" data-section="section4">
-                    <div class="container">
+  <div class="container">
 
-                      <div class="row">
-                        <div class="col-md-5">
-                          <div class="left-content">
-                            <div class="top-content">
-                              <h6>Create Assignment</h6>
-                            </div>
-                            <form method="POST" enctype="multipart/form-data">
-                              {% csrf_token %}
-                              <div class="row">
-                                <div class="col-md-12">
-                                  <fieldset>
-                                    <input name="assignment_name" type="text" class="form-control" id="assignment_name"
-                                      placeholder="Assignment Title" required="true">
-                                  </fieldset>
-                                </div>
-                                <div class="col-md-12">
-                                  <fieldset>
-                                    <input name="percentage_" type="number" class="form-control" id="percentage_"
-                                      placeholder="Minimum % plagiarism" min="0" max="100" step="0.01" required="true">
-                                  </fieldset>
-                                </div>
-                                <div class="col-md-12">
-                                  <fieldset>
+    <div class="row">
+      <div class="col-md-5">
+        <div class="left-content">
+          <div class="top-content">
+            <h6>Create Assignment</h6>
+          </div>
+          <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row">
+              <div class="col-md-12">
+                <fieldset>
+                  <input name="assignment_name" type="text" class="form-control" id="assignment_name"
+                    placeholder="Assignment Title" required="true">
+                </fieldset>
+              </div>
+              <div class="col-md-12">
+                <fieldset>
+                  <input name="percentage_" type="number" class="form-control" id="percentage_"
+                    placeholder="Minimum % plagiarism" min="0" max="100" step="0.01" required="true">
+                </fieldset>
+              </div>
+              <div class="col-md-12">
+                <fieldset>
 
-                                    <input type="file" name="document" required='true' style="background-color: rgb(24, 14, 89);
+                  <input type="file" name="document" required='true' style="background-color: rgb(24, 14, 89);
                   opacity: 50%;
                 color: white;
                 padding: 0.5rem;
@@ -288,20 +288,20 @@
                 cursor: pointer;
                 margin-top: 1rem;" multiple />
 
-                                  </fieldset>
-                                </div>
-                                <div class="col-md-12">
-                                  <fieldset>
-                                    <button type="submit" id="form-submit" class="button">Upload Files</button>
-                                  </fieldset>
-                                </div>
-                              </div>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
+                </fieldset>
+              </div>
+              <div class="col-md-12">
+                <fieldset>
+                  <button type="submit" id="form-submit" class="button">Upload Files</button>
+                </fieldset>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
 
-                    </div>
+  </div>
 </section>
 
 
