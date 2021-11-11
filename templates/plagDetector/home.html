@@ -93,16 +93,17 @@
       <div class="col-md-12">
         <div id='tabs'>
           <ul>
-            <li><a href='#tabs-1'>Cosine Similarity Measure
-              </a></li>
+            <li><a href='#tabs-1'>Cosine Similarity Measure</a></li>
             <li><a href='#tabs-2'>Jaccard Similarity Measure</a></li>
             <li><a href='#tabs-3'> Longest Common Substring</a></li>
+            <li><a href='#tabs-4'> Knuth-Morris-Pratt</a></li>
+            <li><a href='#tabs-5'> Rabin-Karp Algorithm</a></li>
           </ul>
           <section class='tabs-content'>
             <article id='tabs-1'>
               <div class="row">
                 <div class="col-md-6">
-
+                  <img src="static/assets/images/cosine.png" alt="Cosine Similarity">
                 </div>
                 <div class="col-md-6">
                   <h4>Cosine Similarity</h4>
@@ -121,7 +122,7 @@
             <article id='tabs-2'>
               <div class="row">
                 <div class="col-md-6">
-
+                  <img src="static/assets/images/Jaccard.jpg" alt="Jaccard Similarity">
                 </div>
                 <div class="col-md-6">
                   <h4>The Jaccard distance</h4>
@@ -137,16 +138,51 @@
             <article id='tabs-3'>
               <div class="row">
                 <div class="col-md-6">
-
+                  <img src="static/assets/images/lcs.png" alt="LCS Similarity">
                 </div>
                 <div class="col-md-6">
-                  <h4>longest common substring</h4>
+                  <h4>Longest Common Substring</h4>
                   <p>Another Dynamic Programming (DP) approach considered in this proposed similarity detection engine
                     after Levenshtein distance is the longest common substring (LCS) for assuring string similarity
                     without any resulting numerical value. Being a DP implementation, this algorithm has a time
                     complexity of O(nm) where space is utilized more than time. The definition of LCS is simple as it
                     identifies a substring in's 1' and checks for the same in's 2'. The algorithm also has the
                     functionality of keeping track of the substring's maximum length and displaying it on the console.
+                  </p>
+                </div>
+              </div>
+            </article>
+            <article id='tabs-4'>
+              <div class="row">
+                <div class="col-md-6">
+                  <img src="static/assets/images/kmp.png" alt="Cosine Similarity">
+                </div>
+                <div class="col-md-6">
+                  <h4>Knuth-Morris-Pratt</h4>
+                  <p> the Knuth–Morris–Pratt string-searching algorithm (or KMP algorithm) searches for occurrences of a
+                    "word" W within a main "text string" S by employing the observation that when a mismatch occurs, the
+                    word itself embodies sufficient information to determine where the next match could begin, thus
+                    bypassing re-examination of previously matched characters.
+                </div>
+              </div>
+            </article>
+            <article id='tabs-5'>
+              <div class="row">
+                <div class="col-md-6">
+                  <img src="static/assets/images/rabin.jpg" alt="Cosine Similarity">
+                </div>
+                <div class="col-md-6">
+                  <h4>Rabin-Karp Algorithm</h4>
+                  <p>The Rabin–Karp algorithm or Karp–Rabin algorithm is a string-searching
+                    algorithm created by Richard M. Karp and Michael O. Rabin (1987) that uses hashing to find an exact
+                    match of a pattern string in a text. It uses a rolling hash to quickly filter out positions of the
+                    text that cannot match the pattern, and then checks for a match at the remaining positions.
+                    Generalizations of the same idea can be used to find more than one match of a single pattern, or to
+                    find matches for more than one pattern.
+                    To find a single match of a single pattern, the expected time of the algorithm is linear in the
+                    combined length of the pattern and text, although its worst-case time complexity is the product of
+                    the two lengths. To find multiple matches, the expected time is linear in the input lengths, plus
+                    the combined length of all the matches, which could be greater than linear.
                   </p>
                 </div>
               </div>
