@@ -181,14 +181,14 @@ def upload(request):
     x, y = 1, 1
     for a in result:
         y = 1
-
         for b in a:
             if y > x:
                 break
             tr = []
             g = "{:.2f}".format(b)
-            if g > percentage_ and x != y:
+            if float(g) > float(percentage_) and x != y:
                 plag_names.add(doc_titles[x])
+                plag_names.add(doc_titles[y])
                 tr.append(doc_titles[x])
                 tr.append(doc_titles[y])
                 tr.append(g)
